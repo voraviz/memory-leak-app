@@ -11,7 +11,7 @@ metadata:
     app.kubernetes.io/name: java
     app.kubernetes.io/part-of: leak-app
     app.openshift.io/runtime: quarkus
-    app.openshift.io/runtime-version: '17'
+    app.openshift.io/runtime-version: '3.0.3.Final'
 spec:
   replicas: 1
   selector:
@@ -44,9 +44,12 @@ spec:
         ports:
         - containerPort: 8080
         securityContext:
+          seccompProfile: #"RuntimeDefault" or "Localhost"
+            type: RuntimeDefault
           allowPrivilegeEscalation: false
           runAsNonRoot: true
-          drop: ALL
+          capabilities:
+            drop: ["ALL"]
           readOnlyRootFilesystem: false
       tolerations:
       - effect: NoExecute
