@@ -36,8 +36,7 @@ public class HungryResource {
         makeDisk(dishSize);
         return "Added "+dishSize+" bytes";
     }
-
-        
+    
     @GET
     @Path("/eat/{numberOfDishes}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -75,6 +74,15 @@ public class HungryResource {
         return "Total "+i+" dishes, "+total/(1024*1024)+" MB";
     }
 
+    @GET
+    @Path("/kill")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Operation(summary = "Exit with exit code 9")
+    @APIResponse(responseCode = "200", content = @Content(mediaType = MediaType.TEXT_PLAIN))
+    public void exitWithSigKill() {
+        logger.info("Exit with SIGKILL (9)");
+        System.exit(9);
+    }
     private void makeDisk(int size){
         char[] array = new char[size];  
         Arrays.fill(array, 'x'); 
