@@ -2,7 +2,7 @@
 CONTAINER_NAME=quay.io/voravitl/leak
 TYPE=jvm
 PLATFORM=linux/amd64
-TAG=latest
+TAG=jvm
 echo "Build with Dockerfile.$DOCKERFILE tag $TAG"
 mvn clean package -DskipTests=true
 CONTAINER_RUNTIME=podman
@@ -12,7 +12,7 @@ then
    CONTAINER_RUNTIME=docker 
 fi
 set -x
-$CONTAINER_RUNTIME build --platform $PLATFORM --layers=false  -f src/main/docker/Dockerfile.$TYPE  \
+$CONTAINER_RUNTIME build --platform $PLATFORM  -f src/main/docker/Dockerfile.$TYPE  \
 -t ${CONTAINER_NAME}:${TAG} .
 jq --help > /dev/null
 if [ $? -eq 0 ];
