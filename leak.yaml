@@ -41,8 +41,20 @@ spec:
         env:
           - name: APP_DISHSIZE
             value: "10048576" # 10 MB
+          - name: APP_EXITCODE
+            value: "9" 
           - name: JAVA_OPTS
             value: "-Xms200m -Xmx300m -Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+        # livenessProbe:
+        #   httpGet:
+        #     path: /kill
+        #     port: 8080
+        #     scheme: HTTP
+        #   initialDelaySeconds: 15
+        #   timeoutSeconds: 1
+        #   periodSeconds: 10
+        #   successThreshold: 1
+        #   failureThreshold: 1        
         ports:
         - containerPort: 8080
         securityContext:

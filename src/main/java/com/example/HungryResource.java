@@ -27,6 +27,9 @@ public class HungryResource {
     @ConfigProperty(name="app.dishSize",defaultValue="1048576")
     int dishSize;
     
+    @ConfigProperty(name="app.exitCode",defaultValue="9")
+    int exitCode;
+
     @GET
     @Path("/eat")
     @Produces(MediaType.TEXT_PLAIN)
@@ -81,7 +84,7 @@ public class HungryResource {
     @APIResponse(responseCode = "200", content = @Content(mediaType = MediaType.TEXT_PLAIN))
     public void exitWithSigKill() {
         logger.info("Exit with SIGKILL (9)");
-        System.exit(9);
+        System.exit(exitCode);
     }
     private void makeDisk(int size){
         char[] array = new char[size];  
