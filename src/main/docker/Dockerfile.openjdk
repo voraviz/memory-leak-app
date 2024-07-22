@@ -1,0 +1,20 @@
+# Use a lightweight base image
+FROM openjdk:21-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy the JAR file from the context to the working directory
+ENV JAVA_OPTS="-Xmx300m -Xms100m -XX:MaxMetaspaceSize50m -Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+
+# We make four distinct layers so if there are application changes the library layers can be re-used
+COPY target/quarkus-app/lib/ /app/lib/
+COPY target/quarkus-app/*.jar /app/
+COPY target/quarkus-app/app/ /app/app/
+COPY target/quarkus-app/quarkus/ /app/quarkus/
+
+# Expose the port where your Springboot application listens (adjust if needed)
+EXPOSE 8080
+
+# Command to run the application
+CMD ["java", "-jar", "/app/quarkus-run.jar"]
