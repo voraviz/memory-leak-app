@@ -11,7 +11,7 @@ metadata:
     app.kubernetes.io/name: java
     app.kubernetes.io/part-of: leak-app
     app.openshift.io/runtime: quarkus
-    app.openshift.io/runtime-version: '3.0.3.Final'
+    app.openshift.io/runtime-version: '3.11.3.Final'
 spec:
   replicas: 1
   selector:
@@ -28,8 +28,8 @@ spec:
         sidecar.istio.io/inject: "false"
     spec:
       containers:
-      - name: backend
-        image: quay.io/voravitl/leak:v1
+      - name: leak
+        image: quay.io/voravitl/leak:jvm
         imagePullPolicy: Always
         resources:
           requests:
@@ -37,10 +37,12 @@ spec:
             memory: 100Mi
           limits:
             cpu: "0.2"
-            memory: 250Mi
+            memory: 300Mi
         env:
           - name: APP_DISHSIZE
-            value: "10485760"
+            value: "10048576" # 10 MB
+          - name: JAVA_OPTS
+            value: "-Xms200m -Xmx300m -Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
         ports:
         - containerPort: 8080
         securityContext:
