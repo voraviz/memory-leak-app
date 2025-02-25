@@ -76,6 +76,26 @@ public class HungryResource {
 
         return "Total "+i+" dishes, "+total/(1024*1024)+" MB";
     }
+    
+    // @GET
+    // @Path("/burp")
+    // @Produces(MediaType.TEXT_PLAIN)
+
+    // public String removeMeals() {
+    //     for(Gluttony hunger:ApplicationConfig.gluttony){   
+            
+    //         hunger.setSize(0);
+    //         logger.info("Remove Meal");
+    //     }  
+    //     return "Remove meal sucessfully";
+    // }
+    // @GET
+    // @Path("/clear")
+    // @Produces(MediaType.TEXT_PLAIN)
+    // public String clearMeals() {
+    //     System.gc() ;
+    //     return "Force GC";
+    // }
 
     @GET
     @Path("/kill")
